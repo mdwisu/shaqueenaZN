@@ -16,15 +16,15 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        // Get seller IDs
-        $sellerIds = User::where('role', 'seller')->pluck('id')->toArray();
+        // Get admin IDs
+        $adminIds = User::where('role', 'admin')->pluck('id')->toArray();
 
         // Get category IDs
         $categories = Category::all();
 
         // Electronics Products
         $electronics = $categories->where('name', 'Electronics')->first();
-        $this->createProducts($electronics->id, $sellerIds, [
+        $this->createProducts($electronics->id, $adminIds, [
             [
                 'name' => 'Smartphone X',
                 'description' => 'Latest smartphone with advanced features and high-resolution camera.',
@@ -53,7 +53,7 @@ class ProductSeeder extends Seeder
 
         // Clothing Products
         $clothing = $categories->where('name', 'Clothing')->first();
-        $this->createProducts($clothing->id, $sellerIds, [
+        $this->createProducts($clothing->id, $adminIds, [
             [
                 'name' => 'Men\'s Casual Shirt',
                 'description' => 'Comfortable cotton shirt for casual wear.',
@@ -82,7 +82,7 @@ class ProductSeeder extends Seeder
 
         // Home & Kitchen Products
         $homeKitchen = $categories->where('name', 'Home & Kitchen')->first();
-        $this->createProducts($homeKitchen->id, $sellerIds, [
+        $this->createProducts($homeKitchen->id, $adminIds, [
             [
                 'name' => 'Coffee Maker',
                 'description' => 'Automatic coffee maker for perfect brew every time.',
@@ -111,7 +111,7 @@ class ProductSeeder extends Seeder
 
         // Books Products
         $books = $categories->where('name', 'Books')->first();
-        $this->createProducts($books->id, $sellerIds, [
+        $this->createProducts($books->id, $adminIds, [
             [
                 'name' => 'Novel: The Journey',
                 'description' => 'Bestselling novel about an adventure journey.',
@@ -140,7 +140,7 @@ class ProductSeeder extends Seeder
 
         // Sports & Outdoors Products
         $sports = $categories->where('name', 'Sports & Outdoors')->first();
-        $this->createProducts($sports->id, $sellerIds, [
+        $this->createProducts($sports->id, $adminIds, [
             [
                 'name' => 'Yoga Mat',
                 'description' => 'Non-slip yoga mat for comfortable practice.',
@@ -167,13 +167,13 @@ class ProductSeeder extends Seeder
             ],
         ]);
     }
-    private function createProducts($categoryId, $sellerIds, $products)
+    private function createProducts($categoryId, $adminIds, $products)
     {
         foreach ($products as $productData) {
-            $sellerId = $sellerIds[array_rand($sellerIds)];
+            $adminId = $adminIds[array_rand($adminIds)];
 
             Product::create([
-                'user_id' => $sellerId,
+                'user_id' => $adminId,
                 'category_id' => $categoryId,
                 'name' => $productData['name'],
                 'slug' => Str::slug($productData['name']),

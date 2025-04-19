@@ -52,11 +52,11 @@
                                 {{ auth()->user()->name }}
                             </a>
                             <ul class="dropdown-menu">
-                                @if (auth()->user()->role === 'admin')
-                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
+                                @if (auth()->user()->role === 'owner')
+                                    <li><a class="dropdown-item" href="{{ route('owner.dashboard') }}">Owner Dashboard</a>
                                     </li>
-                                @elseif(auth()->user()->role === 'seller')
-                                    <li><a class="dropdown-item" href="{{ route('seller.dashboard') }}">Seller Dashboard</a>
+                                @elseif(auth()->user()->role === 'admin')
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
                                     </li>
                                 @else
                                     <li><a class="dropdown-item" href="{{ route('customer.dashboard') }}">My Account</a>

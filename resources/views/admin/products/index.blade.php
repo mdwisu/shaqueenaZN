@@ -1,7 +1,6 @@
-<!-- resources/views/admin/products/index.blade.php -->
 @extends('layouts.main')
 
-@section('title', 'Manage Products')
+@section('title', 'My Products')
 
 @section('content')
     <div class="row">
@@ -10,9 +9,10 @@
             <div class="card">
                 <div class="list-group list-group-flush">
                     <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
-                    <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action active">Products</a>
-                    <a href="{{ route('admin.categories') }}" class="list-group-item list-group-item-action">Categories</a>
-                    <a href="{{ route('admin.users') }}" class="list-group-item list-group-item-action">Users</a>
+                    <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action active">My
+                        Products</a>
+                    <a href="{{ route('admin.products.create') }}" class="list-group-item list-group-item-action">Add New
+                        Product</a>
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
                     <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
@@ -22,7 +22,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">All Products</h4>
+                    <h4 class="mb-0">My Products</h4>
                     <a href="{{ route('admin.products.create') }}" class="btn btn-sm btn-light">Add New Product</a>
                 </div>
                 <div class="card-body">

@@ -6,23 +6,20 @@ use App\Http\Controllers\PaymentProofController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use App\Http\Controllers\Admin\ProductController as AdminProductController;
-use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Owner\DashboardController as OwnerDashboardController;
+use App\Http\Controllers\Owner\ProductController as OwnerProductController;
+use App\Http\Controllers\Owner\CategoryController as OwnerCategoryController;
+use App\Http\Controllers\Owner\UserController as OwnerUserController;
+use App\Http\Controllers\Owner\OrderController as OwnerOrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
-use App\Http\Controllers\Seller\ProductController as SellerProductController;
-use App\Http\Controllers\Seller\OrderController as SellerOrderController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 use App\Http\Controllers\ProductController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -45,14 +42,48 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         $user = Auth::user();
 
-        if ($user->role === 'admin') {
+        if ($user->role === 'owner') {
+            return redirect()->route('owner.dashboard');
+        } elseif ($user->role === 'admin') {
             return redirect()->route('admin.dashboard');
-        } elseif ($user->role === 'seller') {
-            return redirect()->route('seller.dashboard');
         } else {
             return redirect()->route('customer.dashboard');
         }
     })->name('dashboard');
+});
+
+// Owner Routes
+Route::middleware(['auth', 'role:owner'])->prefix('owner')->name('owner.')->group(function () {
+    Route::get('/dashboard', [OwnerDashboardController::class, 'index'])->name('dashboard');
+
+    // Admin Products Management
+    Route::get('/products', [OwnerProductController::class, 'index'])->name('products');
+    Route::get('/products/create', [OwnerProductController::class, 'create'])->name('products.create');
+    Route::post('/products', [OwnerProductController::class, 'store'])->name('products.store');
+    Route::get('/products/{product}/edit', [OwnerProductController::class, 'edit'])->name('products.edit');
+    Route::put('/products/{product}', [OwnerProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [OwnerProductController::class, 'destroy'])->name('products.destroy');
+
+    // Admin Categories Management
+    Route::get('/categories', [OwnerCategoryController::class, 'index'])->name('categories');
+    Route::get('/categories/create', [OwnerCategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [OwnerCategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{category}/edit', [OwnerCategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{category}', [OwnerCategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{category}', [OwnerCategoryController::class, 'destroy'])->name('categories.destroy');
+
+    // Admin Users Management
+    Route::get('/users', [OwnerUserController::class, 'index'])->name('users');
+    Route::get('/users/create', [OwnerUserController::class, 'create'])->name('users.create');
+    Route::post('/users', [OwnerUserController::class, 'store'])->name('users.store');
+    Route::get('/users/{user}/edit', [OwnerUserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [OwnerUserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [OwnerUserController::class, 'destroy'])->name('users.destroy');
+
+    // Admin Orders Management
+    Route::get('/orders', [OwnerOrderController::class, 'index'])->name('orders');
+    Route::get('/orders/{order}', [OwnerOrderController::class, 'show'])->name('orders.show');
+    Route::put('/orders/{order}/status', [OwnerOrderController::class, 'updateStatus'])->name('orders.status');
 });
 
 // Admin Routes
@@ -67,44 +98,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/products/{product}', [AdminProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
 
-    // Admin Categories Management
-    Route::get('/categories', [AdminCategoryController::class, 'index'])->name('categories');
-    Route::get('/categories/create', [AdminCategoryController::class, 'create'])->name('categories.create');
-    Route::post('/categories', [AdminCategoryController::class, 'store'])->name('categories.store');
-    Route::get('/categories/{category}/edit', [AdminCategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{category}', [AdminCategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('categories.destroy');
-
-    // Admin Users Management
-    Route::get('/users', [AdminUserController::class, 'index'])->name('users');
-    Route::get('/users/create', [AdminUserController::class, 'create'])->name('users.create');
-    Route::post('/users', [AdminUserController::class, 'store'])->name('users.store');
-    Route::get('/users/{user}/edit', [AdminUserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [AdminUserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
-
     // Admin Orders Management
     Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders');
     Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
     Route::put('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
-});
-
-// Seller Routes
-Route::middleware(['auth', 'role:seller'])->prefix('seller')->name('seller.')->group(function () {
-    Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('dashboard');
-
-    // Seller Products Management
-    Route::get('/products', [SellerProductController::class, 'index'])->name('products');
-    Route::get('/products/create', [SellerProductController::class, 'create'])->name('products.create');
-    Route::post('/products', [SellerProductController::class, 'store'])->name('products.store');
-    Route::get('/products/{product}/edit', [SellerProductController::class, 'edit'])->name('products.edit');
-    Route::put('/products/{product}', [SellerProductController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [SellerProductController::class, 'destroy'])->name('products.destroy');
-
-    // Seller Orders Management
-    Route::get('/orders', [SellerOrderController::class, 'index'])->name('orders');
-    Route::get('/orders/{order}', [SellerOrderController::class, 'show'])->name('orders.show');
-    Route::put('/orders/{order}/status', [SellerOrderController::class, 'updateStatus'])->name('orders.status');
+    Route::get('/orders/{order}/invoice', [AdminOrderController::class, 'downloadInvoice'])->name('orders.invoice');
+    Route::put('/orders/{order}/payment', [AdminOrderController::class, 'updatePaymentStatus'])->name('orders.payment');
+    Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
 });
 
 // Customer Routes
@@ -129,8 +129,8 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::post('/orders/{order}/payment', [PaymentProofController::class, 'store'])->name('payment.store');
 });
 
-// Admin/Seller can verify payment proof
-Route::middleware(['auth', 'role:admin,seller'])->group(function () {
+// Owner/Admin can verify payment proof
+Route::middleware(['auth', 'role:owner,admin'])->group(function () {
     Route::get('/payments', [PaymentProofController::class, 'index'])->name('payment.index');
     Route::get('/payments/{paymentProof}', [PaymentProofController::class, 'show'])->name('payment.show');
     Route::post('/payments/{paymentProof}/verify', [PaymentProofController::class, 'verify'])->name('payment.verify');

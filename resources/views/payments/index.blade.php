@@ -10,8 +10,8 @@
                 <div class="list-group list-group-flush">
                     <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
                     <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action">Products</a>
-                    <a href="{{ route('admin.categories') }}" class="list-group-item list-group-item-action">Categories</a>
-                    <a href="{{ route('admin.users') }}" class="list-group-item list-group-item-action">Users</a>
+                    {{-- <a href="{{ route('admin.categories') }}" class="list-group-item list-group-item-action">Categories</a> --}}
+                    {{-- <a href="{{ route('admin.users') }}" class="list-group-item list-group-item-action">Users</a> --}}
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
                     <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action active">Payment
                         Verification</a>

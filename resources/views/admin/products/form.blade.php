@@ -8,12 +8,12 @@
             <!-- Sidebar -->
             <div class="card">
                 <div class="list-group list-group-flush">
-                    <a href="{{ route('seller.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
-                    <a href="{{ route('seller.products') }}" class="list-group-item list-group-item-action">My Products</a>
-                    <a href="{{ route('seller.products.create') }}"
+                    <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
+                    <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action">My Products</a>
+                    <a href="{{ route('admin.products.create') }}"
                         class="list-group-item list-group-item-action {{ !isset($product) ? 'active' : '' }}">Add New
                         Product</a>
-                    <a href="{{ route('seller.orders') }}" class="list-group-item list-group-item-action">Orders</a>
+                    <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
                     <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="card-body">
                     <form
-                        action="{{ isset($product) ? route('seller.products.update', $product->id) : route('seller.products.store') }}"
+                        action="{{ isset($product) ? route('admin.products.update', $product->id) : route('admin.products.store') }}"
                         method="POST" enctype="multipart/form-data">
                         @csrf
                         @if (isset($product))
@@ -121,7 +121,7 @@
                         </div>
 
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="{{ route('seller.products') }}" class="btn btn-secondary">Cancel</a>
+                            <a href="{{ route('admin.products') }}" class="btn btn-secondary">Cancel</a>
                             <button type="submit"
                                 class="btn btn-primary">{{ isset($product) ? 'Update Product' : 'Add Product' }}</button>
                         </div>

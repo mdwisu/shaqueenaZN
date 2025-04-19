@@ -8,11 +8,11 @@
             <!-- Sidebar -->
             <div class="card">
                 <div class="list-group list-group-flush">
-                    <a href="{{ route('seller.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
-                    <a href="{{ route('seller.products') }}" class="list-group-item list-group-item-action">My Products</a>
-                    <a href="{{ route('seller.products.create') }}" class="list-group-item list-group-item-action">Add New
+                    <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
+                    <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action">My Products</a>
+                    <a href="{{ route('admin.products.create') }}" class="list-group-item list-group-item-action">Add New
                         Product</a>
-                    <a href="{{ route('seller.orders') }}" class="list-group-item list-group-item-action active">Orders</a>
+                    <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action active">Orders</a>
                     <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <!-- Filter options -->
                     <div class="mb-3">
-                        <form action="{{ route('seller.orders') }}" method="GET" class="row g-3">
+                        <form action="{{ route('admin.orders') }}" method="GET" class="row g-3">
                             <div class="col-md-4">
                                 <select name="status" class="form-select">
                                     <option value="">All Statuses</option>
@@ -55,7 +55,7 @@
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary">Filter</button>
-                                <a href="{{ route('seller.orders') }}" class="btn btn-secondary">Reset</a>
+                                <a href="{{ route('admin.orders') }}" class="btn btn-secondary">Reset</a>
                             </div>
                         </form>
                     </div>
@@ -103,7 +103,7 @@
                                         </td>
                                         <td>{{ $order->created_at->format('d M Y') }}</td>
                                         <td>
-                                            <a href="{{ route('seller.orders.show', $order->id) }}"
+                                            <a href="{{ route('admin.orders.show', $order->id) }}"
                                                 class="btn btn-sm btn-info">View</a>
                                         </td>
                                     </tr>

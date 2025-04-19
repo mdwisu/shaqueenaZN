@@ -11,7 +11,15 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Admin
+        // Owner (previously admin)
+        User::create([
+            'name' => 'Owner User',
+            'email' => 'owner@example.com',
+            'password' => Hash::make('password'),
+            'role' => 'owner',
+        ]);
+
+        // Admin (previously admin)
         User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
@@ -19,23 +27,15 @@ class UserSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        // Seller
+        // Extra Admin
         User::create([
-            'name' => 'Seller User',
-            'email' => 'seller@example.com',
+            'name' => 'Second Admin',
+            'email' => 'admin2@example.com',
             'password' => Hash::make('password'),
-            'role' => 'seller',
+            'role' => 'admin',
         ]);
 
-        // Extra Sellers
-        User::create([
-            'name' => 'Second Seller',
-            'email' => 'seller2@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'seller',
-        ]);
-
-        // Customer
+        // Customer (unchanged)
         User::create([
             'name' => 'Customer User',
             'email' => 'customer@example.com',
@@ -43,7 +43,7 @@ class UserSeeder extends Seeder
             'role' => 'customer',
         ]);
 
-        // Extra Customers
+        // Extra Customer
         User::create([
             'name' => 'Second Customer',
             'email' => 'customer2@example.com',

@@ -17,7 +17,7 @@
     </div>
 
     <!-- Featured Categories -->
-    <h2 class="mb-4">Featured Categories</h2>
+    {{-- <h2 class="mb-4">Featured Categories</h2>
     <div class="row">
         @foreach ($featuredCategories as $category)
             <div class="col-md-4 mb-4">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         @endforeach
-    </div>
+    </div> --}}
 
     <!-- Featured Products -->
     <h2 class="mb-4">Featured Products</h2>

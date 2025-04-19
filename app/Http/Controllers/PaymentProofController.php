@@ -18,7 +18,7 @@ class PaymentProofController extends Controller
             abort(403);
         }
 
-        return view('payment.upload', compact('order'));
+        return view('payments.upload', compact('order'));
     }
 
     // Customer: Process payment upload
@@ -58,7 +58,7 @@ class PaymentProofController extends Controller
         }
     }
 
-    // Admin/Seller: View all pending payment proofs
+    // Owner/Admin: View all pending payment proofs
     public function index()
     {
         $paymentProofs = PaymentProof::where('status', 'pending')
@@ -66,16 +66,16 @@ class PaymentProofController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('payment.index', compact('paymentProofs'));
+        return view('payments.index', compact('paymentProofs'));
     }
 
-    // Admin/Seller: View payment proof details
+    // Owner/Admin: View payment proof details
     public function show(PaymentProof $paymentProof)
     {
-        return view('payment.show', compact('paymentProof'));
+        return view('payments.show', compact('paymentProof'));
     }
 
-    // Admin/Seller: Verify payment proof
+    // Owner/Admin: Verify payment proof
     public function verify(Request $request, PaymentProof $paymentProof)
     {
         $status = $request->status; // 'verified' or 'rejected'
