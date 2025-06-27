@@ -25,9 +25,19 @@
                         </ol>
                     </nav>
 
-                    <h2>{{ $product->name }}</h2>
+                    <h2>{{ $product->name }}
+                        @if ($product->is_featured_active)
+                            <span class="badge bg-warning text-dark ms-1">Featured</span>
+                        @endif
+                    </h2>
                     <p class="text-muted">Category: {{ $product->category->name }}</p>
-                    <h3 class="text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</h3>
+                    @if ($product->is_discount_active)
+                        <h3 class="text-primary">Rp {{ number_format($product->final_price, 0, ',', '.') }} <span
+                                class="text-muted text-decoration-line-through fs-5">Rp
+                                {{ number_format($product->price, 0, ',', '.') }}</span></h3>
+                    @else
+                        <h3 class="text-primary">Rp {{ number_format($product->final_price, 0, ',', '.') }}</h3>
+                    @endif
 
                     <div class="mb-4">
                         <h5>Description</h5>

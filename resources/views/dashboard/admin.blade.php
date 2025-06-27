@@ -14,7 +14,7 @@
                     <a href="{{ route('admin.products.create') }}" class="list-group-item list-group-item-action">Add New
                         Product</a>
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
-                    <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
+                    <a href="{{ route('admin.payments.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
             </div>
@@ -53,6 +53,33 @@
                                 <div class="card-body">
                                     <h5>Revenue</h5>
                                     <h2>Rp {{ number_format($revenue ?? 0, 0, ',', '.') }}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card text-white bg-success mb-3">
+                                <div class="card-header">Total Revenue</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Rp {{ number_format($revenue, 2, ',', '.') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-white bg-info mb-3">
+                                <div class="card-header">Total Profit</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Rp {{ number_format($profit, 2, ',', '.') }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-header">Total Products</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ $totalProducts }}</h5>
                                 </div>
                             </div>
                         </div>

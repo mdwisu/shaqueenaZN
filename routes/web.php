@@ -105,6 +105,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/orders/{order}/invoice', [AdminOrderController::class, 'downloadInvoice'])->name('orders.invoice');
     Route::put('/orders/{order}/payment', [AdminOrderController::class, 'updatePaymentStatus'])->name('orders.payment');
     Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('orders.destroy');
+
+    // Payment Proof
+    Route::get('/payments', [PaymentProofController::class, 'index'])->name('payments.index');
+    Route::get('/payments/{paymentProof}', [PaymentProofController::class, 'show'])->name('payments.show');
+    Route::post('/payments/{paymentProof}/verify', [PaymentProofController::class, 'verify'])->name('payments.verify');
 });
 
 // Customer Routes
@@ -127,13 +132,6 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
 Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/orders/{order}/payment', [PaymentProofController::class, 'create'])->name('payment.create');
     Route::post('/orders/{order}/payment', [PaymentProofController::class, 'store'])->name('payment.store');
-});
-
-// Owner/Admin can verify payment proof
-Route::middleware(['auth', 'role:owner,admin'])->group(function () {
-    Route::get('/payments', [PaymentProofController::class, 'index'])->name('payment.index');
-    Route::get('/payments/{paymentProof}', [PaymentProofController::class, 'show'])->name('payment.show');
-    Route::post('/payments/{paymentProof}/verify', [PaymentProofController::class, 'verify'])->name('payment.verify');
 });
 
 require __DIR__ . '/auth.php';

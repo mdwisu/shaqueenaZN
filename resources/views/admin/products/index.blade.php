@@ -14,7 +14,7 @@
                     <a href="{{ route('admin.products.create') }}" class="list-group-item list-group-item-action">Add New
                         Product</a>
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
-                    <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
+                    <a href="{{ route('admin.payments.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
             </div>
@@ -35,6 +35,7 @@
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Price</th>
+                                    <th>Final Price</th>
                                     <th>Stock</th>
                                     <th>Status</th>
                                     <th>Actions</th>
@@ -53,9 +54,23 @@
                                                     alt="No Image">
                                             @endif
                                         </td>
-                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->name }}
+                                            @if ($product->is_featured_active)
+                                                <span class="badge bg-warning text-dark ms-1">Featured</span>
+                                            @endif
+                                        </td>
                                         <td>{{ $product->category->name }}</td>
-                                        <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
+                                        <td>
+                                            @if ($product->is_discount_active)
+                                                <span class="text-danger fw-bold">Rp
+                                                    {{ number_format($product->final_price, 0, ',', '.') }}</span><br>
+                                                <span class="text-muted text-decoration-line-through">Rp
+                                                    {{ number_format($product->price, 0, ',', '.') }}</span>
+                                            @else
+                                                Rp {{ number_format($product->final_price, 0, ',', '.') }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $product->final_price }}</td>
                                         <td>{{ $product->stock_quantity }}</td>
                                         <td>
                                             @if ($product->status)

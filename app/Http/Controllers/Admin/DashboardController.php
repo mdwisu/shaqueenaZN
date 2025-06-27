@@ -30,6 +30,14 @@ class DashboardController extends Controller
             ->first()
             ->total ?? 0;
 
+        $profit = OrderItem::whereIn('product_id', $productIds)
+            ->join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->join('products', 'order_items.product_id', '=', 'products.id')
+            ->where('orders.status', 'completed') // Assuming 'completed' is the status for finished orders
+            ->select(DB::raw('SUM(order_items.quantity * (order_items.price - products.cost_price)) as total_profit'))
+            ->first()
+            ->total_profit ?? 0;
+
         $recentOrders = Order::whereHas('orderItems', function ($query) use ($productIds) {
             $query->whereIn('product_id', $productIds);
         })
@@ -42,6 +50,7 @@ class DashboardController extends Controller
             'totalProducts',
             'totalSales',
             'revenue',
+            'profit',
             'recentOrders'
         ));
     }

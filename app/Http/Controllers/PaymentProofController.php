@@ -97,7 +97,7 @@ class PaymentProofController extends Controller
 
         $order->save();
 
-        return redirect()->route('payment.index')
+        return redirect()->route('admin.payments.index')
             ->with('success', 'Payment verification completed');
     }
 }

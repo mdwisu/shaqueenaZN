@@ -63,6 +63,16 @@ class ProductController extends Controller
             'slug' => Str::slug($request->name) . '-' . Str::random(5),
             'description' => $request->description,
             'price' => $request->price,
+            'cost_price' => $request->cost_price,
+            'pricing_mode' => $request->pricing_mode ?? 'manual',
+            'markup_percent' => $request->pricing_mode === 'auto' ? $request->markup_percent : null,
+            'is_featured' => $request->has('is_featured') ? 1 : 0,
+            'featured_start' => $request->featured_start,
+            'featured_end' => $request->featured_end,
+            'discount_type' => $request->discount_type,
+            'discount_value' => $request->discount_value,
+            'discount_start' => $request->discount_start,
+            'discount_end' => $request->discount_end,
             'stock_quantity' => $request->stock_quantity,
             'image' => $imagePath,
             'status' => $request->has('status') ? 1 : 0,
@@ -123,6 +133,16 @@ class ProductController extends Controller
         $product->slug = Str::slug($request->name) . '-' . Str::random(5);
         $product->description = $request->description;
         $product->price = $request->price;
+        $product->cost_price = $request->cost_price;
+        $product->pricing_mode = $request->pricing_mode ?? 'manual';
+        $product->markup_percent = $request->pricing_mode === 'auto' ? $request->markup_percent : null;
+        $product->is_featured = $request->has('is_featured') ? 1 : 0;
+        $product->featured_start = $request->featured_start;
+        $product->featured_end = $request->featured_end;
+        $product->discount_type = $request->discount_type;
+        $product->discount_value = $request->discount_value;
+        $product->discount_start = $request->discount_start;
+        $product->discount_end = $request->discount_end;
         $product->stock_quantity = $request->stock_quantity;
         $product->status = $request->has('status') ? 1 : 0;
         $product->save();

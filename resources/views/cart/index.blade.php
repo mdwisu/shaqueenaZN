@@ -35,7 +35,16 @@
                                             <span>{{ $item->product->name }}</span>
                                         </div>
                                     </td>
-                                    <td>Rp {{ number_format($item->product->price, 0, ',', '.') }}</td>
+                                    <td>
+                                        @if ($item->product->is_discount_active)
+                                            <span class="text-danger fw-bold">Rp
+                                                {{ number_format($item->product->final_price, 0, ',', '.') }}</span><br>
+                                            <span class="text-muted text-decoration-line-through">Rp
+                                                {{ number_format($item->product->price, 0, ',', '.') }}</span>
+                                        @else
+                                            Rp {{ number_format($item->product->final_price, 0, ',', '.') }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <form action="{{ route('cart.update', $item->id) }}" method="POST"
                                             class="d-inline">
@@ -53,7 +62,9 @@
                                             <button type="submit" class="btn btn-sm btn-primary mt-1">Update</button>
                                         </form>
                                     </td>
-                                    <td>Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                                    <td>
+                                        Rp {{ number_format($item->product->final_price * $item->quantity, 0, ',', '.') }}
+                                    </td>
                                     <td>
                                         <form action="{{ route('cart.remove', $item->id) }}" method="POST"
                                             onsubmit="return confirm('Are you sure you want to remove this item?')">
@@ -68,7 +79,9 @@
                         <tfoot>
                             <tr>
                                 <td colspan="3" class="text-end"><strong>Total:</strong></td>
-                                <td colspan="2"><strong>Rp {{ number_format($cart->total, 0, ',', '.') }}</strong></td>
+                                <td colspan="2"><strong>Rp
+                                        {{ number_format($cart->cartItems->sum(fn($item) => $item->product->final_price * $item->quantity), 0, ',', '.') }}</strong>
+                                </td>
                             </tr>
                         </tfoot>
                     </table>

@@ -13,7 +13,7 @@
                     <a href="{{ route('admin.products.create') }}" class="list-group-item list-group-item-action">Add New
                         Product</a>
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action active">Orders</a>
-                    <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
+                    <a href="{{ route('admin.payments.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
             </div>

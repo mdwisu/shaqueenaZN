@@ -11,7 +11,7 @@
                     <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
                     <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action">Products</a>
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action active">Orders</a>
-                    <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
+                    <a href="{{ route('admin.payments.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
             </div>

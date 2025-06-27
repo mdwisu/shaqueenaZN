@@ -11,6 +11,9 @@ class HomeController extends Controller
     public function index()
     {
         $featuredProducts = Product::where('status', true)
+            ->where('is_featured', true)
+            ->whereDate('featured_start', '<=', now())
+            ->whereDate('featured_end', '>=', now())
             ->inRandomOrder()
             ->take(4)
             ->get();

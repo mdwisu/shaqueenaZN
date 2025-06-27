@@ -14,7 +14,7 @@
                         class="list-group-item list-group-item-action active">Categories</a>
                     <a href="{{ route('admin.users') }}" class="list-group-item list-group-item-action">Users</a>
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
-                    <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action">Payment
+                    <a href="{{ route('admin.payments.index') }}" class="list-group-item list-group-item-action">Payment
                         Verification</a>
                 </div>
             </div>

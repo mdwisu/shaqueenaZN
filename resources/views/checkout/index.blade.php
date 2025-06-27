@@ -97,14 +97,26 @@
                                         <tr>
                                             <td>{{ $item->product->name }}</td>
                                             <td>{{ $item->quantity }}</td>
-                                            <td>Rp {{ number_format($item->subtotal, 0, ',', '.') }}</td>
+                                            <td>
+                                                @if ($item->product->is_discount_active)
+                                                    <span class="text-danger fw-bold">Rp
+                                                        {{ number_format($item->product->final_price * $item->quantity, 0, ',', '.') }}</span><br>
+                                                    <span class="text-muted text-decoration-line-through">Rp
+                                                        {{ number_format($item->product->price * $item->quantity, 0, ',', '.') }}</span>
+                                                @else
+                                                    Rp
+                                                    {{ number_format($item->product->final_price * $item->quantity, 0, ',', '.') }}
+                                                @endif
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
                                         <td colspan="2" class="text-end"><strong>Total:</strong></td>
-                                        <td><strong>Rp {{ number_format($cart->total, 0, ',', '.') }}</strong></td>
+                                        <td><strong>Rp
+                                                {{ number_format($cart->cartItems->sum(fn($item) => $item->product->final_price * $item->quantity), 0, ',', '.') }}</strong>
+                                        </td>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -112,7 +124,8 @@
 
                         <h5 class="mt-4">Payment Method</h5>
                         <div class="alert alert-info">
-                            <p>Setelah melakukan pemesanan, Anda perlu mentransfer jumlah total ke salah satu rekening bank kami dan mengunggah bukti pembayaran di rincian pesanan Anda.</p>
+                            <p>Setelah melakukan pemesanan, Anda perlu mentransfer jumlah total ke salah satu rekening bank
+                                kami dan mengunggah bukti pembayaran di rincian pesanan Anda.</p>
                             <ul class="mb-0">
                                 <li>Bank BCA: 1740874558 (A.n Selvyra citha dewi)</li>
                                 <li>Bank BRI: 227401012529530 (A.n Selvyra citha dewi)</li>

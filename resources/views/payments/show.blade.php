@@ -10,10 +10,9 @@
                 <div class="list-group list-group-flush">
                     <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
                     <a href="{{ route('admin.products') }}" class="list-group-item list-group-item-action">Products</a>
-                    {{-- <a href="{{ route('admin.categories') }}" class="list-group-item list-group-item-action">Categories</a> --}}
-                    {{-- <a href="{{ route('admin.users') }}" class="list-group-item list-group-item-action">Users</a> --}}
                     <a href="{{ route('admin.orders') }}" class="list-group-item list-group-item-action">Orders</a>
-                    <a href="{{ route('payment.index') }}" class="list-group-item list-group-item-action active">Payment
+                    <a href="{{ route('admin.payments.index') }}"
+                        class="list-group-item list-group-item-action active">Payment
                         Verification</a>
                 </div>
             </div>
@@ -22,7 +21,7 @@
             <div class="card">
                 <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                     <h4 class="mb-0">Payment Proof Detail</h4>
-                    <a href="{{ route('payment.index') }}" class="btn btn-sm btn-light">Back to List</a>
+                    <a href="{{ route('admin.payments.index') }}" class="btn btn-sm btn-light">Back to List</a>
                 </div>
                 <div class="card-body">
                     <div class="row">
