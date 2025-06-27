@@ -1,12 +1,15 @@
 <x-guest-layout>
+    <div class="flex flex-col items-center justify-center">
+        <img src="{{ asset('images/seq.jpg') }}" alt="Register Image" class="mb-6 rounded shadow" style="max-width: 200px;">
+    </div>
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
         <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                autofocus autocomplete="name" />
+            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                required autofocus autocomplete="name" />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
@@ -43,7 +46,7 @@
             <select id="role" name="role"
                 class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 <option value="customer">Customer</option>
-                
+
             </select>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
