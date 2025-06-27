@@ -5,7 +5,7 @@
 @section('content')
     <div class="row mb-4">
         <div class="col-md-6">
-            <h2>Our Products</h2>
+            <h2>our products</h2>
         </div>
         <div class="col-md-6">
             <form action="{{ route('products.index') }}" method="GET" class="d-flex">

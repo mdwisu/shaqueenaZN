@@ -41,7 +41,7 @@
 
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <h5>Order Information</h5>
+                            <h5>Order information</h5>
                             <table class="table table-bordered">
                                 <tr>
                                     <th>Order Number:</th>

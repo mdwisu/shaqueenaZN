@@ -123,12 +123,10 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h6>Terms &amp; Conditions</h6>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                            ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        <p class="text-muted">Dengan menggunakan toko ini, Anda setuju untuk mematuhi semua syarat dan ketentuan yang berlaku. Semua transaksi pada kebijakan kami terkait harga, stok, pengiriman, dan pengembalian. Kami berhak mengubah atau menghentikan layanan tanpa pemberitahuan.</p>
                     </div>
                     <div class="col-lg-12 text-center mt-4">
-                        <p class="text-muted">Thank you for your business!</p>
+                        <p class="text-muted">Terima Kasih Telah Berbelanja!</p>
                     </div>
                 </div>
             </div>

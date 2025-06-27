@@ -67,10 +67,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 # how to run
 
-## clone
-
-```
-git clone https://github.com/mdwisu/shaqueenaZN.git
 ```
 
 ## install
@@ -80,7 +76,8 @@ composer install
 
 npm install
 ```
-
+cp .env.example .env
+php artisan key:generate
 ## migrate
 
 ```
@@ -92,7 +89,7 @@ php artisan migrate
 ```
 php artisan db:seed
 ```
-
+php artisan storage:link
 ## running
 
 ```
@@ -108,3 +105,124 @@ php artisan serve
 ```
 http://127.0.0.1:8000
 ```
+
+        // Electronics Products
+        $electronics = $categories->where('name', 'Electronics')->first();
+        $this->createProducts($electronics->id, $adminIds, [
+            [
+                'name' => 'Smartphone X',
+                'description' => 'Latest smartphone with advanced features and high-resolution camera.',
+                'price' => 5000000,
+                'stock_quantity' => 50
+            ],
+            [
+                'name' => 'Laptop Pro',
+                'description' => 'Powerful laptop for professional use with high performance and long battery life.',
+                'price' => 12000000,
+                'stock_quantity' => 30
+            ],
+            [
+                'name' => 'Wireless Earbuds',
+                'description' => 'Premium sound quality with active noise cancellation.',
+                'price' => 1500000,
+                'stock_quantity' => 100
+            ],
+            [
+                'name' => 'Smart Watch',
+                'description' => 'Track your fitness and stay connected with smart notifications.',
+                'price' => 2500000,
+                'stock_quantity' => 45
+            ],
+        ]);
+
+        // Clothing Products
+        $clothing = $categories->where('name', 'Clothing')->first();
+        $this->createProducts($clothing->id, $adminIds, [
+            [
+                'name' => 'Men\'s Casual Shirt',
+                'description' => 'Comfortable cotton shirt for casual wear.',
+                'price' => 250000,
+                'stock_quantity' => 75
+            ],
+            [
+                'name' => 'Women\'s Dress',
+                'description' => 'Elegant dress for special occasions.',
+                'price' => 450000,
+                'stock_quantity' => 60
+            ],
+            [
+                'name' => 'Denim Jeans',
+                'description' => 'Classic denim jeans with perfect fit.',
+                'price' => 350000,
+                'stock_quantity' => 80
+            ],
+            [
+                'name' => 'Sports Shoes',
+                'description' => 'Comfortable shoes for sports and casual wear.',
+                'price' => 650000,
+                'stock_quantity' => 40
+            ],
+        ]);
+
+        // Home & Kitchen Products
+        $homeKitchen = $categories->where('name', 'Home & Kitchen')->first();
+        $this->createProducts($homeKitchen->id, $adminIds, [
+            [
+                'name' => 'Coffee Maker',
+                'description' => 'Automatic coffee maker for perfect brew every time.',
+                'price' => 800000,
+                'stock_quantity' => 35
+            ],
+            [
+                'name' => 'Bedding Set',
+                'description' => 'Luxurious cotton bedding set for comfortable sleep.',
+                'price' => 1200000,
+                'stock_quantity' => 25
+            ],
+            [
+                'name' => 'Kitchen Knife Set',
+                'description' => 'Professional chef knife set for precision cutting.',
+                'price' => 950000,
+                'stock_quantity' => 30
+            ],
+            [
+                'name' => 'Living Room Lamp',
+                'description' => 'Modern design lamp to enhance your living room decor.',
+                'price' => 450000,
+                'stock_quantity' => 50
+            ],
+        ]);
+
+        // Books Products
+        $books = $categories->where('name', 'Books')->first();
+        $this->createProducts($books->id, $adminIds, [
+            [
+                'name' => 'Novel: The Journey',
+                'description' => 'Bestselling novel about an adventure journey.',
+                'price' => 150000,
+                'stock_quantity' => 100
+            ],
+            [
+                'name' => 'Cookbook Collection',
+                'description' => 'Collection of recipes from around the world.',
+                'price' => 280000,
+                'stock_quantity' => 65
+            ],
+            [
+                'name' => 'Business Strategy Guide',
+                'description' => 'Comprehensive guide for business development and strategy.',
+                'price' => 320000,
+                'stock_quantity' => 45
+            ],
+            [
+                'name' => 'Programming Fundamentals',
+                'description' => 'Learn the basics of programming and coding.',
+                'price' => 275000,
+                'stock_quantity' => 55
+            ],
+        ]);
+
+        E-commerce Laravel
+
+        php artisan migrate:fresh --seed
+        <option value="admin">Admin</option>

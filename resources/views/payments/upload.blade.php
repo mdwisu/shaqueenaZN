@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <h5>Order Information</h5>
+                            <h5>Order information</h5>
                             <table class="table table-bordered">
                                 <tr>
                                     <th>Order Number:</th>
@@ -31,10 +31,10 @@
                         <div class="col-md-6">
                             <h5>Payment Instructions</h5>
                             <div class="alert alert-info">
-                                <p>Please transfer the total amount to one of the following bank accounts:</p>
+                                <p>Silakan transfer jumlah total ke salah satu rekening bank berikut:</p>
                                 <ul class="mb-0">
-                                    <li>Bank BCA: 1234567890 (John Doe)</li>
-                                    <li>Bank Mandiri: 0987654321 (John Doe)</li>
+                                    <li>Bank BCA: 1740874558 (A.n Selvyra citha dewi)</li>
+                                    <li>Bank BRI: 227401012529530 (A.n Selvyra citha dewi)</li>
                                 </ul>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label for="proof_image" class="form-label">Payment Proof Image</label>
+                            <label for="proof_image" class="form-label">Gambar Bukti Pembayaran</label>
                             <input type="file" class="form-control @error('proof_image') is-invalid @enderror"
                                 id="proof_image" name="proof_image" required>
                             <div class="form-text">Upload a clear image of your payment receipt/transfer confirmation.
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="notes" class="form-label">Notes (Optional)</label>
+                            <label for="notes" class="form-label">Catatan</label>
                             <textarea class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes" rows="3"
                                 placeholder="Add any additional information about your payment here...">{{ old('notes') }}</textarea>
                             @error('notes')

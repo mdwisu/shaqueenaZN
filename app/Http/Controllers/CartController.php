@@ -60,7 +60,7 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route('cart.index')->with('success', 'Product added to cart');
+        return redirect()->route('cart.index')->with('success', 'Product has been added to cart');
     }
 
     public function update(Request $request, $id)

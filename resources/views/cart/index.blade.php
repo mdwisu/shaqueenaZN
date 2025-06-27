@@ -75,15 +75,15 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-3">
-                    <a href="{{ route('products.index') }}" class="btn btn-secondary">Continue Shopping</a>
-                    <a href="{{ route('checkout.index') }}" class="btn btn-success">Proceed to Checkout</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-secondary">continue shopping</a>
+                    <a href="{{ route('checkout.index') }}" class="btn btn-success">proceed to checkout</a>
                 </div>
             @else
                 <div class="text-center py-5">
                     <i class="fas fa-shopping-cart fa-4x mb-3 text-muted"></i>
                     <h5>Your cart is empty</h5>
                     <p>Looks like you haven't added any products to your cart yet.</p>
-                    <a href="{{ route('products.index') }}" class="btn btn-primary mt-3">Continue Shopping</a>
+                    <a href="{{ route('products.index') }}" class="btn btn-primary mt-3">continue shopping</a>
                 </div>
             @endif
         </div>

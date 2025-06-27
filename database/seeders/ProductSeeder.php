@@ -138,34 +138,7 @@ class ProductSeeder extends Seeder
             ],
         ]);
 
-        // Sports & Outdoors Products
-        $sports = $categories->where('name', 'Sports & Outdoors')->first();
-        $this->createProducts($sports->id, $adminIds, [
-            [
-                'name' => 'Yoga Mat',
-                'description' => 'Non-slip yoga mat for comfortable practice.',
-                'price' => 180000,
-                'stock_quantity' => 70
-            ],
-            [
-                'name' => 'Tennis Racket',
-                'description' => 'Professional tennis racket for ultimate performance.',
-                'price' => 750000,
-                'stock_quantity' => 40
-            ],
-            [
-                'name' => 'Camping Tent',
-                'description' => 'Waterproof tent for outdoor camping adventures.',
-                'price' => 1500000,
-                'stock_quantity' => 30
-            ],
-            [
-                'name' => 'Fitness Tracker',
-                'description' => 'Track your fitness goals and monitor your progress.',
-                'price' => 850000,
-                'stock_quantity' => 55
-            ],
-        ]);
+        
     }
     private function createProducts($categoryId, $adminIds, $products)
     {

@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5>Order Information</h5>
+                            <h5>Order information</h5>
                             <table class="table">
                                 <tr>
                                     <th>Order Number:</th>
@@ -82,7 +82,7 @@
                             @endif
                         </div>
                         <div class="col-md-6">
-                            <h5>Payment Proof Image</h5>
+                            <h5>Gambar Bukti Pembayaran</h5>
                             <div class="border p-2">
                                 <img src="{{ asset('storage/' . $paymentProof->image_path) }}" alt="Payment Proof"
                                     class="img-fluid">

@@ -8,7 +8,7 @@
         <img src="{{ asset('images/banner.jpg') }}" class="card-img" alt="Banner"
             style="height: 400px; object-fit: cover; opacity: 0.6;">
         <div class="card-img-overlay d-flex flex-column justify-content-center text-center">
-            <h1 class="card-title">Welcome to Our E-commerce Store</h1>
+            <h1 class="card-title">Welcome to Shaqueena Zn Official Store</h1>
             <p class="card-text">Find the best products at the best prices</p>
             <div>
                 <a href="{{ route('products.index') }}" class="btn btn-primary btn-lg">Shop Now</a>

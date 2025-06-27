@@ -68,7 +68,7 @@
                     @endif
 
                     <div class="d-flex justify-content-start">
-                        <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">Continue Shopping</a>
+                        <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">continue shopping</a>
                     </div>
                 </div>
             </div>

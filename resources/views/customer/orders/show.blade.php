@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <div class="row mb-4">
                         <div class="col-md-6">
-                            <h5>Order Information</h5>
+                            <h5>Order information</h5>
                             <table class="table table-bordered">
                                 <tr>
                                     <th>Order Number:</th>
@@ -140,12 +140,12 @@
                     @if ($order->payment_status == 'unpaid')
                         <div class="alert alert-info mt-3">
                             <h5>Payment Instructions</h5>
-                            <p>Please transfer the total amount to one of the following bank accounts:</p>
+                            <p>Silakan transfer jumlah total ke salah satu rekening bank berikut:</p>
                             <ul>
-                                <li>Bank BCA: 1234567890 (John Doe)</li>
-                                <li>Bank Mandiri: 0987654321 (John Doe)</li>
+                                <li>Bank BCA: 1740874558 (A.n Selvyra citha dewi)</li>
+                                <li>Bank BRI: 227401012529530 (A.n Selvyra citha dewi)</li>
                             </ul>
-                            <p>After making the payment, please upload your payment proof below:</p>
+                            <p>Setelah melakukan pembayaran, silakan unggah bukti pembayaran Anda di bawah ini:</p>
                             <a href="{{ route('payment.create', $order->id) }}" class="btn btn-success">Upload Payment
                                 Proof</a>
                         </div>

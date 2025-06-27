@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="shipping_state" class="form-label">State/Province</label>
+                                    <label for="shipping_state" class="form-label">State</label>
                                     <input type="text" class="form-control @error('shipping_state') is-invalid @enderror"
                                         id="shipping_state" name="shipping_state" value="{{ old('shipping_state') }}"
                                         required>
@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="shipping_zipcode" class="form-label">Zipcode</label>
+                                    <label for="shipping_zipcode" class="form-label">Zip Code</label>
                                     <input type="text"
                                         class="form-control @error('shipping_zipcode') is-invalid @enderror"
                                         id="shipping_zipcode" name="shipping_zipcode" value="{{ old('shipping_zipcode') }}"
@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="notes" class="form-label">Order Notes (optional)</label>
+                            <label for="notes" class="form-label">Notes</label>
                             <textarea class="form-control @error('notes') is-invalid @enderror" id="notes" name="notes" rows="3">{{ old('notes') }}</textarea>
                             @error('notes')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -112,11 +112,10 @@
 
                         <h5 class="mt-4">Payment Method</h5>
                         <div class="alert alert-info">
-                            <p>After placing your order, you'll need to transfer the total amount to one of our bank
-                                accounts and upload the payment proof in your order details.</p>
+                            <p>Setelah melakukan pemesanan, Anda perlu mentransfer jumlah total ke salah satu rekening bank kami dan mengunggah bukti pembayaran di rincian pesanan Anda.</p>
                             <ul class="mb-0">
-                                <li>Bank BCA: 1234567890 (John Doe)</li>
-                                <li>Bank Mandiri: 0987654321 (John Doe)</li>
+                                <li>Bank BCA: 1740874558 (A.n Selvyra citha dewi)</li>
+                                <li>Bank BRI: 227401012529530 (A.n Selvyra citha dewi)</li>
                             </ul>
                         </div>
 
