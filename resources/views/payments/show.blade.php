@@ -58,14 +58,15 @@
                                 <div class="mt-4">
                                     <h5>Action</h5>
                                     <div class="d-flex">
-                                        <form action="{{ route('payment.verify', $paymentProof->id) }}" method="POST"
-                                            class="me-2">
+                                        <form action="{{ route('admin.payments.verify', $paymentProof->id) }}"
+                                            method="POST" class="me-2">
                                             @csrf
                                             <input type="hidden" name="status" value="verified">
                                             <button type="submit" class="btn btn-success">Verify Payment</button>
                                         </form>
 
-                                        <form action="{{ route('payment.verify', $paymentProof->id) }}" method="POST">
+                                        <form action="{{ route('admin.payments.verify', $paymentProof->id) }}"
+                                            method="POST">
                                             @csrf
                                             <input type="hidden" name="status" value="rejected">
                                             <button type="submit" class="btn btn-danger">Reject Payment</button>

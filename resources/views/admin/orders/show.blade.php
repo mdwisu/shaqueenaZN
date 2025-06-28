@@ -251,14 +251,14 @@
 
                                     @if ($order->paymentProof->status == 'pending')
                                         <div class="d-flex mt-3">
-                                            <form action="{{ route('payment.verify', $order->paymentProof->id) }}"
+                                            <form action="{{ route('admin.payments.verify', $order->paymentProof->id) }}"
                                                 method="POST" class="me-2">
                                                 @csrf
                                                 <input type="hidden" name="status" value="verified">
                                                 <button type="submit" class="btn btn-success">Verify Payment</button>
                                             </form>
 
-                                            <form action="{{ route('payment.verify', $order->paymentProof->id) }}"
+                                            <form action="{{ route('admin.payments.verify', $order->paymentProof->id) }}"
                                                 method="POST">
                                                 @csrf
                                                 <input type="hidden" name="status" value="rejected">

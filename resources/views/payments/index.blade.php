@@ -56,7 +56,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('payment.show', $proof->id) }}"
+                                            <a href="{{ route('admin.payments.show', $proof->id) }}"
                                                 class="btn btn-sm btn-info">View</a>
                                         </td>
                                     </tr>

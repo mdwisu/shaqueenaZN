@@ -34,7 +34,9 @@
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Category</th>
+                                    <th>Cost Price</th>
                                     <th>Price</th>
+                                    <th>Pricing Mode</th>
                                     <th>Final Price</th>
                                     <th>Stock</th>
                                     <th>Status</th>
@@ -61,6 +63,27 @@
                                         </td>
                                         <td>{{ $product->category->name }}</td>
                                         <td>
+                                            @if ($product->cost_price)
+                                                Rp {{ number_format($product->cost_price, 0, ',', '.') }}
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            Rp {{ number_format($product->price, 0, ',', '.') }}
+                                            @if ($product->pricing_mode === 'auto' && $product->markup_percent)
+                                                <br><small class="text-info">+{{ $product->markup_percent }}%
+                                                    markup</small>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($product->pricing_mode === 'auto')
+                                                <span class="badge bg-info">Auto</span>
+                                            @else
+                                                <span class="badge bg-secondary">Manual</span>
+                                            @endif
+                                        </td>
+                                        <td>
                                             @if ($product->is_discount_active)
                                                 <span class="text-danger fw-bold">Rp
                                                     {{ number_format($product->final_price, 0, ',', '.') }}</span><br>
@@ -70,7 +93,6 @@
                                                 Rp {{ number_format($product->final_price, 0, ',', '.') }}
                                             @endif
                                         </td>
-                                        <td>{{ $product->final_price }}</td>
                                         <td>{{ $product->stock_quantity }}</td>
                                         <td>
                                             @if ($product->status)
@@ -94,7 +116,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center">No products found</td>
+                                        <td colspan="11" class="text-center">No products found</td>
                                     </tr>
                                 @endforelse
                             </tbody>

@@ -47,12 +47,31 @@ class ProductController extends Controller
             'stock_quantity' => 'required|integer|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'sometimes|boolean',
+            'cost_price' => 'nullable|numeric|min:0',
+            'pricing_mode' => 'required|in:manual,auto',
+            'markup_percent' => 'nullable|numeric|min:0',
         ]);
+
+        // Validate auto pricing requirements
+        if ($request->pricing_mode === 'auto') {
+            if (empty($request->cost_price) || $request->cost_price <= 0) {
+                return back()->withErrors(['cost_price' => 'Cost Price harus diisi untuk mode otomatis'])->withInput();
+            }
+            if (empty($request->markup_percent) || $request->markup_percent <= 0) {
+                return back()->withErrors(['markup_percent' => 'Markup harus diisi untuk mode otomatis'])->withInput();
+            }
+        }
 
         // Handle image upload
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('products', 'public');
+        }
+
+        // Calculate price for auto mode
+        $price = $request->price;
+        if ($request->pricing_mode === 'auto' && $request->cost_price && $request->markup_percent) {
+            $price = $request->cost_price + ($request->cost_price * $request->markup_percent / 100);
         }
 
         // Create product
@@ -62,9 +81,9 @@ class ProductController extends Controller
             'name' => $request->name,
             'slug' => Str::slug($request->name) . '-' . Str::random(5),
             'description' => $request->description,
-            'price' => $request->price,
+            'price' => $price,
             'cost_price' => $request->cost_price,
-            'pricing_mode' => $request->pricing_mode ?? 'manual',
+            'pricing_mode' => $request->pricing_mode,
             'markup_percent' => $request->pricing_mode === 'auto' ? $request->markup_percent : null,
             'is_featured' => $request->has('is_featured') ? 1 : 0,
             'featured_start' => $request->featured_start,
@@ -114,7 +133,20 @@ class ProductController extends Controller
             'stock_quantity' => 'required|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'sometimes|boolean',
+            'cost_price' => 'nullable|numeric|min:0',
+            'pricing_mode' => 'required|in:manual,auto',
+            'markup_percent' => 'nullable|numeric|min:0',
         ]);
+
+        // Validate auto pricing requirements
+        if ($request->pricing_mode === 'auto') {
+            if (empty($request->cost_price) || $request->cost_price <= 0) {
+                return back()->withErrors(['cost_price' => 'Cost Price harus diisi untuk mode otomatis'])->withInput();
+            }
+            if (empty($request->markup_percent) || $request->markup_percent <= 0) {
+                return back()->withErrors(['markup_percent' => 'Markup harus diisi untuk mode otomatis'])->withInput();
+            }
+        }
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -127,14 +159,20 @@ class ProductController extends Controller
             $product->image = $imagePath;
         }
 
+        // Calculate price for auto mode
+        $price = $request->price;
+        if ($request->pricing_mode === 'auto' && $request->cost_price && $request->markup_percent) {
+            $price = $request->cost_price + ($request->cost_price * $request->markup_percent / 100);
+        }
+
         // Update product
         $product->category_id = $request->category_id;
         $product->name = $request->name;
         $product->slug = Str::slug($request->name) . '-' . Str::random(5);
         $product->description = $request->description;
-        $product->price = $request->price;
+        $product->price = $price;
         $product->cost_price = $request->cost_price;
-        $product->pricing_mode = $request->pricing_mode ?? 'manual';
+        $product->pricing_mode = $request->pricing_mode;
         $product->markup_percent = $request->pricing_mode === 'auto' ? $request->markup_percent : null;
         $product->is_featured = $request->has('is_featured') ? 1 : 0;
         $product->featured_start = $request->featured_start;

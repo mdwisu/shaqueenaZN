@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <form
                         action="{{ isset($product) ? route('admin.products.update', $product->id) : route('admin.products.store') }}"
-                        method="POST" enctype="multipart/form-data">
+                        method="POST" enctype="multipart/form-data" id="productForm">
                         @csrf
                         @if (isset($product))
                             @method('PUT')
@@ -71,19 +71,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-4">
-                                    <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-                                    <input type="number" name="price" id="price"
-                                        value="{{ old('price', $product->price ?? '') }}"
-                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-4">
                                     <label for="cost_price" class="block text-sm font-medium text-gray-700">Cost
                                         Price</label>
                                     <input type="number" name="cost_price" id="cost_price"
                                         value="{{ old('cost_price', $product->cost_price ?? '') }}"
                                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-4">
+                                    <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+                                    <input type="number" name="price" id="price"
+                                        value="{{ old('price', $product->price ?? '') }}"
+                                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <small class="text-muted" id="priceNote">Harga yang akan ditampilkan ke customer</small>
                                 </div>
                             </div>
                         </div>
@@ -109,6 +110,16 @@
                             <input type="number" step="0.01" name="markup_percent" id="markup_percent"
                                 value="{{ old('markup_percent', $product->markup_percent ?? '') }}"
                                 class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <small class="text-muted">Contoh: 50 = 50% markup dari cost price</small>
+                        </div>
+
+                        <div class="mb-4" id="calculated_price_group" style="display: none;">
+                            <div class="alert alert-info">
+                                <strong>Harga yang Dihitung Otomatis:</strong>
+                                <span id="calculated_price">Rp 0</span>
+                                <br>
+                                <small>Cost Price + Markup = Harga Jual</small>
+                            </div>
                         </div>
 
                         <div class="mb-4 border rounded p-3">
@@ -207,4 +218,114 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pricingModeRadios = document.querySelectorAll('input[name="pricing_mode"]');
+            const markupGroup = document.getElementById('markup_percent_group');
+            const calculatedPriceGroup = document.getElementById('calculated_price_group');
+            const costPriceInput = document.getElementById('cost_price');
+            const markupInput = document.getElementById('markup_percent');
+            const priceInput = document.getElementById('price');
+            const calculatedPriceSpan = document.getElementById('calculated_price');
+            const priceNote = document.getElementById('priceNote');
+
+            // Function to calculate price
+            function calculatePrice() {
+                const costPrice = parseFloat(costPriceInput.value) || 0;
+                const markup = parseFloat(markupInput.value) || 0;
+
+                if (costPrice > 0 && markup > 0) {
+                    const calculatedPrice = costPrice + (costPrice * markup / 100);
+                    calculatedPriceSpan.textContent = 'Rp ' + calculatedPrice.toLocaleString('id-ID');
+                    return calculatedPrice;
+                }
+                return 0;
+            }
+
+            // Function to update price input based on mode
+            function updatePriceInput() {
+                const selectedMode = document.querySelector('input[name="pricing_mode"]:checked').value;
+
+                if (selectedMode === 'auto') {
+                    const calculatedPrice = calculatePrice();
+                    if (calculatedPrice > 0) {
+                        priceInput.value = calculatedPrice;
+                        priceInput.readOnly = true;
+                        priceNote.textContent = 'Harga dihitung otomatis dari cost price + markup';
+                        priceNote.className = 'text-info';
+                    }
+                } else {
+                    priceInput.readOnly = false;
+                    priceNote.textContent = 'Harga yang akan ditampilkan ke customer';
+                    priceNote.className = 'text-muted';
+                }
+            }
+
+            // Handle pricing mode change
+            pricingModeRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'auto') {
+                        markupGroup.style.display = 'block';
+                        calculatedPriceGroup.style.display = 'block';
+                        updatePriceInput();
+                    } else {
+                        markupGroup.style.display = 'none';
+                        calculatedPriceGroup.style.display = 'none';
+                        priceInput.readOnly = false;
+                        priceNote.textContent = 'Harga yang akan ditampilkan ke customer';
+                        priceNote.className = 'text-muted';
+                    }
+                });
+            });
+
+            // Handle cost price and markup changes
+            costPriceInput.addEventListener('input', function() {
+                if (document.querySelector('input[name="pricing_mode"]:checked').value === 'auto') {
+                    calculatePrice();
+                    updatePriceInput();
+                }
+            });
+
+            markupInput.addEventListener('input', function() {
+                if (document.querySelector('input[name="pricing_mode"]:checked').value === 'auto') {
+                    calculatePrice();
+                    updatePriceInput();
+                }
+            });
+
+            // Form validation
+            document.getElementById('productForm').addEventListener('submit', function(e) {
+                const selectedMode = document.querySelector('input[name="pricing_mode"]:checked').value;
+
+                if (selectedMode === 'auto') {
+                    const costPrice = parseFloat(costPriceInput.value) || 0;
+                    const markup = parseFloat(markupInput.value) || 0;
+
+                    if (costPrice <= 0) {
+                        e.preventDefault();
+                        alert('Cost Price harus diisi dan lebih dari 0 untuk mode otomatis');
+                        costPriceInput.focus();
+                        return false;
+                    }
+
+                    if (markup <= 0) {
+                        e.preventDefault();
+                        alert('Markup harus diisi dan lebih dari 0 untuk mode otomatis');
+                        markupInput.focus();
+                        return false;
+                    }
+                }
+            });
+
+            // Initialize on page load
+            if (document.querySelector('input[name="pricing_mode"]:checked').value === 'auto') {
+                markupGroup.style.display = 'block';
+                calculatedPriceGroup.style.display = 'block';
+                updatePriceInput();
+            }
+        });
+    </script>
 @endsection
