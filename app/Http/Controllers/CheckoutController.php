@@ -63,7 +63,7 @@ class CheckoutController extends Controller
                 'order_number' => 'ORD-' . strtoupper(Str::random(10)),
                 'status' => 'pending',
                 'payment_status' => 'unpaid',
-                'total_amount' => $cart->total,
+                'total_amount' => $cart->cartItems->sum(fn($item) => $item->product->final_price * $item->quantity),
                 'shipping_address' => $request->shipping_address,
                 'shipping_city' => $request->shipping_city,
                 'shipping_state' => $request->shipping_state,
@@ -78,7 +78,7 @@ class CheckoutController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $item->product_id,
                     'quantity' => $item->quantity,
-                    'price' => $item->product->price
+                    'price' => $item->product->final_price
                 ]);
 
                 // Update product stock
