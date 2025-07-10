@@ -102,7 +102,14 @@
                                 class="text-decoration-none">{{ $product->name }}</a>
                         </h5>
                         <p class="card-text text-muted">{{ $product->category->name }}</p>
-                        <p class="card-text fw-bold">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                        @if ($product->is_discount_active)
+                            <p class="card-text mb-0"><span class="text-danger fw-bold">Rp
+                                    {{ number_format($product->final_price, 0, ',', '.') }}</span> <span
+                                    class="text-muted text-decoration-line-through">Rp
+                                    {{ number_format($product->price, 0, ',', '.') }}</span></p>
+                        @else
+                            <p class="card-text fw-bold">Rp {{ number_format($product->final_price, 0, ',', '.') }}</p>
+                        @endif
                         @if ($product->stock_quantity > 0)
                             <form action="{{ route('cart.add') }}" method="POST">
                                 @csrf
