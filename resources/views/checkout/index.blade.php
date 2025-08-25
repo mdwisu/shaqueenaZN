@@ -113,13 +113,38 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="2" class="text-end"><strong>Total:</strong></td>
-                                        <td><strong>Rp
-                                                {{ number_format($cart->cartItems->sum(fn($item) => $item->product->final_price * $item->quantity), 0, ',', '.') }}</strong>
+                                        <td colspan="2" class="text-end">Subtotal:</td>
+                                        <td>Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-end">Estimasi Ongkos Kirim:</td>
+                                        <td>
+                                            @if($estimatedShippingCost == 0)
+                                                <span class="text-success">Gratis</span>
+                                            @else
+                                                Rp {{ number_format($estimatedShippingCost, 0, ',', '.') }}
+                                            @endif
                                         </td>
+                                    </tr>
+                                    <tr class="table-active">
+                                        <td colspan="2" class="text-end"><strong>Estimasi Total:</strong></td>
+                                        <td><strong>Rp {{ number_format($subtotal + $estimatedShippingCost, 0, ',', '.') }}</strong></td>
                                     </tr>
                                 </tfoot>
                             </table>
+                        </div>
+
+                        <div class="alert alert-warning">
+                            <h6><i class="fas fa-info-circle"></i> Informasi Ongkos Kirim:</h6>
+                            <ul class="mb-2">
+                                <li>Pembelian ≥ Rp 500.000: <strong>Gratis ongkir</strong></li>
+                                <li>Pembelian Rp 200.000 - Rp 499.999: Rp 15.000</li>
+                                <li>Pembelian Rp 100.000 - Rp 199.999: Rp 25.000</li>
+                                <li>Pembelian < Rp 100.000: Rp 35.000</li>
+                            </ul>
+                            <div class="alert alert-info mb-0">
+                                <small><i class="fas fa-exclamation-triangle"></i> <strong>Catatan:</strong> Ongkos kirim di atas adalah estimasi untuk wilayah Jakarta dan sekitarnya. Admin akan mengkonfirmasi ongkos kirim final berdasarkan alamat pengiriman Anda.</small>
+                            </div>
                         </div>
 
                         <h5 class="mt-4">Payment Method</h5>

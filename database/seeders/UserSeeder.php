@@ -11,44 +11,44 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        // Owner (previously admin)
+        // Admin for testing shipping notification
         User::create([
-            'name' => 'Owner User',
-            'email' => 'owner@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'owner',
-        ]);
-
-        // Admin (previously admin)
-        User::create([
-            'name' => 'Admin User',
-            'email' => 'admin@example.com',
-            'password' => Hash::make('password'),
+            'name' => 'Dwi Susanto Admin',
+            'email' => 'dwisusanto784@gmail.com',
+            'password' => Hash::make('password123'),
             'role' => 'admin',
         ]);
 
-        // Extra Admin
+        // Customer for testing checkout flow
+        User::create([
+            'name' => 'Dwi Susanto Customer', 
+            'email' => 'dwi.susanto487@gmail.com',
+            'password' => Hash::make('password123'),
+            'role' => 'customer',
+        ]);
+
+        // Extra admin for multiple admin notifications
         User::create([
             'name' => 'Second Admin',
-            'email' => 'admin2@example.com',
-            'password' => Hash::make('password'),
+            'email' => 'admin2@shaqueenazn.com',
+            'password' => Hash::make('password123'),
             'role' => 'admin',
         ]);
 
-        // Customer (unchanged)
+        // Extra customer for testing
         User::create([
-            'name' => 'Customer User',
-            'email' => 'customer@example.com',
-            'password' => Hash::make('password'),
+            'name' => 'Test Customer',
+            'email' => 'customer@shaqueenazn.com',
+            'password' => Hash::make('password123'),
             'role' => 'customer',
         ]);
 
-        // Extra Customer
+        // Owner account
         User::create([
-            'name' => 'Second Customer',
-            'email' => 'customer2@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'customer',
+            'name' => 'Owner ShaqeenaZN',
+            'email' => 'owner@shaqueenazn.com',
+            'password' => Hash::make('password123'),
+            'role' => 'owner',
         ]);
     }
 }

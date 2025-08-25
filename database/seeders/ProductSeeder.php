@@ -138,7 +138,55 @@ class ProductSeeder extends Seeder
             ],
         ]);
 
+        // Add special test products for shipping scenarios
+        $this->createShippingTestProducts($electronics->id, $adminIds);
+    }
+
+    private function createShippingTestProducts($categoryId, $adminIds)
+    {
+        $adminId = $adminIds[array_rand($adminIds)];
         
+        // Products for testing different shipping cost scenarios
+        $testProducts = [
+            [
+                'name' => 'Test Product 50k - Ongkir 35k',
+                'description' => 'Product untuk test ongkir Rp 35.000 (subtotal < 100k)',
+                'price' => 50000,
+                'stock_quantity' => 10
+            ],
+            [
+                'name' => 'Test Product 150k - Ongkir 25k',
+                'description' => 'Product untuk test ongkir Rp 25.000 (subtotal 100k-199k)',
+                'price' => 150000,
+                'stock_quantity' => 10
+            ],
+            [
+                'name' => 'Test Product 300k - Ongkir 15k',
+                'description' => 'Product untuk test ongkir Rp 15.000 (subtotal 200k-499k)',
+                'price' => 300000,
+                'stock_quantity' => 10
+            ],
+            [
+                'name' => 'Test Product 600k - Gratis Ongkir',
+                'description' => 'Product untuk test gratis ongkir (subtotal >= 500k)',
+                'price' => 600000,
+                'stock_quantity' => 10
+            ],
+        ];
+
+        foreach ($testProducts as $productData) {
+            Product::create([
+                'user_id' => $adminId,
+                'category_id' => $categoryId,
+                'name' => $productData['name'],
+                'slug' => Str::slug($productData['name']),
+                'description' => $productData['description'],
+                'price' => $productData['price'],
+                'stock_quantity' => $productData['stock_quantity'],
+                'status' => true,
+                'is_featured' => true
+            ]);
+        }
     }
     private function createProducts($categoryId, $adminIds, $products)
     {

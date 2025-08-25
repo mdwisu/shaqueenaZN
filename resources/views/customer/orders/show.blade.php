@@ -63,9 +63,45 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th>Shipping Status:</th>
+                                    <td>
+                                        @if($order->shipping_confirmed)
+                                            <span class="badge bg-success">Ongkir Dikonfirmasi</span>
+                                        @else
+                                            <span class="badge bg-warning">Menunggu Konfirmasi Ongkir</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Shipping Cost:</th>
+                                    <td>
+                                        @if($order->shipping_confirmed && $order->final_shipping_cost !== null)
+                                            @if($order->final_shipping_cost == 0)
+                                                <span class="text-success fw-bold">Gratis</span>
+                                            @else
+                                                Rp {{ number_format($order->final_shipping_cost, 0, ',', '.') }}
+                                            @endif
+                                        @else
+                                            Estimasi: 
+                                            @if($order->estimated_shipping_cost == 0)
+                                                <span class="text-success">Gratis</span>
+                                            @else
+                                                Rp {{ number_format($order->estimated_shipping_cost, 0, ',', '.') }}
+                                            @endif
+                                            <small class="text-muted">(Menunggu konfirmasi)</small>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th>Total Amount:</th>
                                     <td>Rp {{ number_format($order->total_amount, 0, ',', '.') }}</td>
                                 </tr>
+                                @if($order->shipping_notes)
+                                    <tr>
+                                        <th>Shipping Notes:</th>
+                                        <td>{{ $order->shipping_notes }}</td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
                         <div class="col-md-6">
@@ -136,6 +172,22 @@
                             </tfoot>
                         </table>
                     </div>
+
+                    @if (!$order->shipping_confirmed)
+                        <div class="alert alert-warning mt-3">
+                            <h6><i class="fas fa-clock"></i> Menunggu Konfirmasi Ongkir</h6>
+                            <p class="mb-2">Admin sedang menghitung ongkos kirim final berdasarkan alamat pengiriman Anda. 
+                            Ongkir saat ini adalah estimasi sementara.</p>
+                            <p class="mb-0 small">
+                                <strong>Estimasi:</strong> 
+                                @if($order->estimated_shipping_cost == 0)
+                                    <span class="text-success">Gratis</span>
+                                @else
+                                    Rp {{ number_format($order->estimated_shipping_cost, 0, ',', '.') }}
+                                @endif
+                            </p>
+                        </div>
+                    @endif
 
                     @if ($order->payment_status == 'unpaid')
                         <div class="alert alert-info mt-3">

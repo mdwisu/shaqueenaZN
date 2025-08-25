@@ -118,12 +118,43 @@
                                         <td>{{ $order->notes }}</td>
                                     </tr>
                                 @endif
+                                <tr>
+                                    <th>Estimated Shipping:</th>
+                                    <td>
+                                        @if($order->estimated_shipping_cost == 0)
+                                            <span class="text-success">Gratis</span>
+                                        @else
+                                            Rp {{ number_format($order->estimated_shipping_cost, 0, ',', '.') }}
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Final Shipping Cost:</th>
+                                    <td>
+                                        @if($order->shipping_confirmed && $order->final_shipping_cost !== null)
+                                            @if($order->final_shipping_cost == 0)
+                                                <span class="text-success">Gratis</span>
+                                            @else
+                                                Rp {{ number_format($order->final_shipping_cost, 0, ',', '.') }}
+                                            @endif
+                                            <span class="badge bg-success ms-2">Confirmed</span>
+                                        @else
+                                            <span class="text-muted">Pending confirmation</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @if($order->shipping_notes)
+                                    <tr>
+                                        <th>Shipping Notes:</th>
+                                        <td>{{ $order->shipping_notes }}</td>
+                                    </tr>
+                                @endif
                             </table>
                         </div>
                     </div>
 
                     <div class="row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <h5>Update Order Status</h5>
                             <form action="{{ route('admin.orders.status', $order->id) }}" method="POST">
                                 @csrf
@@ -139,11 +170,11 @@
                                         <option value="declined" {{ $order->status == 'declined' ? 'selected' : '' }}>
                                             Declined</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary">Update Status</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
                                 </div>
                             </form>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <h5>Update Payment Status</h5>
                             <form action="{{ route('admin.orders.payment', $order->id) }}" method="POST">
                                 @csrf
@@ -159,9 +190,40 @@
                                         <option value="failed" {{ $order->payment_status == 'failed' ? 'selected' : '' }}>
                                             Failed</option>
                                     </select>
-                                    <button type="submit" class="btn btn-primary">Update Payment</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Update</button>
                                 </div>
                             </form>
+                        </div>
+                        <div class="col-md-4">
+                            @if(!$order->shipping_confirmed)
+                                <h5>Confirm Shipping Cost</h5>
+                                <form action="{{ route('admin.orders.shipping', $order->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <div class="mb-2">
+                                        <input type="number" name="final_shipping_cost" 
+                                               class="form-control form-control-sm" 
+                                               placeholder="Final shipping cost"
+                                               value="{{ $order->estimated_shipping_cost }}" 
+                                               min="0" required>
+                                    </div>
+                                    <div class="mb-2">
+                                        <textarea name="shipping_notes" 
+                                                  class="form-control form-control-sm" 
+                                                  placeholder="Shipping notes (optional)" 
+                                                  rows="2"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-sm w-100">Confirm Shipping</button>
+                                </form>
+                            @else
+                                <h5 class="text-success">Shipping Confirmed</h5>
+                                <p class="mb-0 small text-muted">
+                                    Final cost: Rp {{ number_format($order->final_shipping_cost, 0, ',', '.') }}
+                                </p>
+                                @if($order->shipping_notes)
+                                    <p class="mb-0 small text-muted">{{ $order->shipping_notes }}</p>
+                                @endif
+                            @endif
                         </div>
                     </div>
 

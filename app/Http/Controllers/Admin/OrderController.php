@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\NotificationController;
+use App\Mail\ShippingConfirmedNotification;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -162,6 +165,43 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.show', $order)
             ->with('success', 'Payment status updated successfully.');
+    }
+
+    /**
+     * Confirm shipping cost for the specified order.
+     */
+    public function confirmShipping(Request $request, Order $order)
+    {
+        $request->validate([
+            'final_shipping_cost' => 'required|numeric|min:0',
+            'shipping_notes' => 'nullable|string|max:500',
+        ]);
+
+        // Update shipping information
+        $order->final_shipping_cost = $request->final_shipping_cost;
+        $order->shipping_confirmed = true;
+        $order->shipping_notes = $request->shipping_notes;
+        
+        // Update total amount with final shipping cost
+        $order->total_amount = $order->orderItems->sum(fn($item) => $item->price * $item->quantity) + $request->final_shipping_cost;
+        
+        $order->save();
+
+        // Send notification to customer about shipping confirmation
+        NotificationController::createNotification(
+            $order->user_id,
+            'shipping_confirmed',
+            'Ongkos Kirim Dikonfirmasi',
+            "Ongkos kirim untuk order #{$order->order_number} telah dikonfirmasi sebesar " . 
+            ($request->final_shipping_cost == 0 ? 'GRATIS' : 'Rp ' . number_format($request->final_shipping_cost, 0, ',', '.')),
+            ['order_id' => $order->id]
+        );
+
+        // Send email notification to customer
+        Mail::to($order->user->email)->send(new ShippingConfirmedNotification($order));
+
+        return redirect()->route('admin.orders.show', $order)
+            ->with('success', 'Shipping cost confirmed successfully.');
     }
 
     /**
